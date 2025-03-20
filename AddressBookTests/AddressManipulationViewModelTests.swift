@@ -1,5 +1,5 @@
 //
-//  AddressManipulationViewModelUnitTesting.swift
+//  AddressManipulationViewModelTests.swift
 //  AddressBookTests
 //
 //  Created by ZopSmart on 20/03/25.
@@ -9,9 +9,8 @@ import Testing
 @testable import AddressBook
 
 
-struct AddressManipulationViewModelUnitTesting {
-    
-    @Test func test_AddressManipulationViewModel_Initialization_With_Address() {
+struct AddressManipulationViewModelTests {
+    @Test func test_Initialization_With_Address() {
         let mockManager = MockAddressManager()
         let address = AddressModel(id: UUID(), street: "A",apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: false)
         let vm = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)

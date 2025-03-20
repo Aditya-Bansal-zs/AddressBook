@@ -8,11 +8,11 @@
 import Foundation
 
 class SectionViewModel: ObservableObject {
-    private let manager: AddressManager
+    private let manager: AddressManagerProtocol
     @Published var addresses: [AddressModel] = []
     @Published var addressToManipulate: AddressModel? = nil
     
-    init(manager: AddressManager) {
+    init(manager: AddressManagerProtocol = AddressManager.shared) {
         self.manager = manager
         fetchAddresses()
     }
@@ -42,7 +42,7 @@ class SectionViewModel: ObservableObject {
     func updateCurrentAfterEdit() {
         let updatedAddresses = manager.mapEntityToAddressModel(section: true)
 
-        var newAddresses = addresses.map { existingAddress in
+        let newAddresses = addresses.map { existingAddress in
             if let updatedAddress = updatedAddresses.first(where: { $0.id == existingAddress.id }) {
                 return updatedAddress.withUpdated(isCurrent: true) // Ensure isCurrent is true
             } else {

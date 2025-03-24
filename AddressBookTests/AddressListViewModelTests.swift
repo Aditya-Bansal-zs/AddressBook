@@ -9,83 +9,54 @@ import Testing
 @testable import AddressBook
 
 
-enum SectionCases: CaseIterable{
-    case sectionTrue
-    case sectionFalse
-    var sectionValue: Bool {
-        switch self {
-        case .sectionTrue:
-            return true
-        case .sectionFalse:
-            return false
-        }
-    }
-}
-
-enum AddressListTestCase: CaseIterable {
-    case emptyList
-    case nonEmptyList
-    
-    var mockAddresses: [AddressModel] {
-        switch self{
-        case .emptyList:
-            return []
-        case .nonEmptyList:
-            return [AddressModel(id: UUID(), street: "A", apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: false)]
-        }
-    }
-    var expectedCount: Int {
-        return mockAddresses.count
-    }
-}
-
-class AddressListViewModelTests {
+@MainActor
+struct AddressListViewModelTests {
     var mockManager: MockAddressManager?
+    var viewModel: AddressListViewModel!
 
     init() {
-        setUp()
-    }
-
-    func setUp() {
         mockManager = MockAddressManager()
+        viewModel = AddressListViewModel(manager: mockManager!, section: false)
     }
 
-    func tearDown() {
-        mockManager = nil
-    }
-
-    @Test("All section cases", arguments: SectionCases.allCases)
-    func test_section(_ section: SectionCases) {
+    @Test("All section cases", arguments: [
+        true, false
+    ])
+    func test_section(section: Bool) {
         guard let mockManager = mockManager else {
             #expect(Bool(false), "mockManager is not initialized")
             return
         }
-        let viewModel: AddressListViewModel = AddressListViewModel(manager: mockManager, section: section.sectionValue)
-        #expect(viewModel.section == section.sectionValue)
+        let viewModel: AddressListViewModel = AddressListViewModel(manager: mockManager, section: section)
+        #expect(viewModel.section == section)
     }
     
-    @Test("All address list cases", arguments: AddressListTestCase.allCases)
-    func test_refreshData(_ addresses: AddressListTestCase) {
+    @Test("All address list cases", arguments: [
+        ([],0),([AddressModel(id: UUID(), street: "A", apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: false)],1)
+    ])
+    func test_refreshData(addresses: [AddressModel],expectedCount: Int) {
         guard let mockManager = mockManager else {
             #expect(Bool(false), "mockManager is not initialized")
             return
         }
         let section: Bool  = false
-        mockManager.mockAddresses = addresses.mockAddresses
+        mockManager.mockAddresses = addresses
         let viewModel = AddressListViewModel(manager: mockManager, section: section)
         viewModel.refreshData()
-        #expect(viewModel.addresses.count == addresses.expectedCount)
+        #expect(viewModel.addresses.count == expectedCount)
     }
     
-    @Test("All address list cases", arguments: AddressListTestCase.allCases)
-    func test_fetchAddressList(_ addressCase: AddressListTestCase) {
+    @Test("All address list cases", arguments: [
+        ([],0),([AddressModel(id: UUID(), street: "A", apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: false)],1)
+    ])
+    func test_fetchAddressList(addresses: [AddressModel], expectedCount: Int) {
         guard let mockManager = mockManager else {
             #expect(Bool(false), "mockManager is not initialized")
             return
         }
         let section: Bool  = false
-        mockManager.mockAddresses = addressCase.mockAddresses
+        mockManager.mockAddresses = addresses
         let viewModel = AddressListViewModel(manager: mockManager , section: section)
-        #expect(viewModel.addresses.count == addressCase.expectedCount)
+        #expect(viewModel.addresses.count == expectedCount)
     }
 }

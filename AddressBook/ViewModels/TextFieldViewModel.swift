@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TextFieldType: String {
+public enum TextFieldType: String {
     case street
     case apt
     case city
@@ -22,7 +22,6 @@ enum TextFieldType: String {
         }
     }
 }
-
 
 class TextFieldViewModel: ObservableObject {
     @Published var isValid: Bool = true

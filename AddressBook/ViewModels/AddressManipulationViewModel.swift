@@ -36,11 +36,9 @@ class AddressManipulationViewModel: ObservableObject {
         self.isMailingAddress = addressToManipulate?.isMailingAddress ?? false
 
     }
-
-    private var isValidAddress: Bool {
+    var isValidAddress: Bool {
         !street.isEmpty && !city.isEmpty && !state.isEmpty && postalcode.count == 5
     }
-
     func addAddress() {
         if(!isValidAddress) {
             isAlert = true
@@ -60,6 +58,10 @@ class AddressManipulationViewModel: ObservableObject {
     }
 
     func updateAddress() {
+        if(!isValidAddress) {
+            isAlert = true
+            return
+        }
         let updatedAddress = AddressModel(
             id: UUID(),
             street: street,

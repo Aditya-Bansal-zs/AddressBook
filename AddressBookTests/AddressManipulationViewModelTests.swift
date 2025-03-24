@@ -8,101 +8,157 @@ import Foundation
 import Testing
 @testable import AddressBook
 
-
+@MainActor
 struct AddressManipulationViewModelTests {
-    @Test func test_Initialization_With_Address() {
-        let mockManager = MockAddressManager()
-        let address = AddressModel(id: UUID(), street: "A",apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: false)
-        let vm = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
-        #expect(vm.street == "A")
-        #expect(vm.apt == "B")
-        #expect(vm.city == "C")
-        #expect(vm.state == "D")
-        #expect(vm.postalcode == "12345")
-        #expect(vm.isMailingAddress == true)
-        #expect(vm.isCurrent == false)
-    }
-    @Test func test_AddressManipulationViewModel_Initialization_Without_Address() {
-        let mockManager = MockAddressManager()
-        
-        let vm = AddressManipulationViewModel(manager: mockManager, decider: true)
-        #expect(vm.street == "")
-        #expect(vm.apt == "")
-        #expect(vm.city == "")
-        #expect(vm.state == "")
-        #expect(vm.postalcode == "")
-        #expect(vm.isMailingAddress == false)
-        #expect(vm.isCurrent == false)
+    var mockManager: MockAddressManager!
+    var viewModel: AddressManipulationViewModel!
+    
+    init() {
+        self.mockManager = MockAddressManager()
+        self.viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: AddressModel(
+            id: UUID(),
+            street: "A",
+            apt: "B",
+            city: "C",
+            state: "D",
+            postalcode: "12345",
+            isMailingAddress: true,
+            isCurrent: false
+        ), decider: true)
     }
     
-    @Test func test_AddressManipulationViewModel_isAlertShouldTrigger (){
-        let vm = AddressManipulationViewModel(decider: true)
-        vm.street = ""
-        vm.city = "C"
-        vm.state = "D"
-        vm.postalcode = "12345"
-        vm.addAddress()
-        #expect(vm.isAlert == true)
+    @Test("Initialization all test case", arguments: [
+        AddressModel(
+            id: UUID(),
+            street: "A",
+            apt: "B",
+            city: "C",
+            state: "D",
+            postalcode: "12345",
+            isMailingAddress: true,
+            isCurrent: false
+        ),
+        AddressModel(
+            id: UUID(),
+            street: "",
+            apt: "",
+            city: "",
+            state: "",
+            postalcode: "",
+            isMailingAddress: false,
+            isCurrent: false
+        )
+    ])
+    mutating func test_Initialization(addressToManipulate: AddressModel) {
+        guard let mockManager = mockManager else {
+            #expect(Bool(false), "mockManager is not initialized")
+            return
+        }
+        viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: addressToManipulate, decider: true)
+        #expect(viewModel.street == addressToManipulate.street)
+        #expect(viewModel.apt == addressToManipulate.apt)
+        #expect(viewModel.city == addressToManipulate.city)
+        #expect(viewModel.state == addressToManipulate.state)
+        #expect(viewModel.postalcode == addressToManipulate.postalcode)
+        #expect(viewModel.isMailingAddress == addressToManipulate.isMailingAddress)
+        #expect(viewModel.isCurrent == addressToManipulate.isCurrent)
     }
-    @Test func test_AddressManipulationViewModel_isAlertShouldNotTrigger (){
-        let vm = AddressManipulationViewModel(decider: true)
-        vm.street = "A"
-        vm.city = "C"
-        vm.state = "D"
-        vm.postalcode = "12345"
-        vm.addAddress()
-        #expect(vm.isAlert == false)
+    @Test("Initialization all test case", arguments: [
+       ( AddressModel(
+            id: UUID(),
+            street: "A",
+            apt: "B",
+            city: "C",
+            state: "D",
+            postalcode: "12345",
+            isMailingAddress: true,
+            isCurrent: false
+       ),false),
+        (AddressModel(
+            id: UUID(),
+            street: "",
+            apt: "",
+            city: "",
+            state: "",
+            postalcode: "",
+            isMailingAddress: false,
+            isCurrent: false
+        ),true)
+    ])
+    mutating func test_isAlert (address: AddressModel, expectedValue: Bool){
+        guard let mockManager = mockManager else {
+            #expect(Bool(false), "mockManager is not initialized")
+            return
+        }
+        viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
+        viewModel.addAddress()
+        #expect(viewModel.isAlert == expectedValue)
     }
-    
-    @Test func test_AddressManipulationViewModel_AddAddress() {
-        let mockManager = MockAddressManager()
-        let vm = AddressManipulationViewModel(manager: mockManager,decider: true)
-        vm.street = "Aa"
-        vm.apt = "B"
-        vm.city = "C"
-        vm.state = "D"
-        vm.postalcode = "12345"
-        vm.isMailingAddress = true
-        vm.isCurrent = true
-        vm.addAddress()
-        #expect(mockManager.mockAddresses.count == 1)
-        #expect(mockManager.mockAddresses.first?.apt == "B")
-        #expect(mockManager.mockAddresses.first?.city == "C")
-        #expect(mockManager.mockAddresses.first?.state == "D")
-        #expect(mockManager.mockAddresses.first?.postalcode == "12345")
-        #expect(mockManager.mockAddresses.first?.isMailingAddress == true)
-        #expect(mockManager.mockAddresses.first?.isCurrent == true)
+    @Test("Initialization all test case", arguments: [
+        ( AddressModel(
+             id: UUID(),
+             street: "A",
+             apt: "B",
+             city: "C",
+             state: "D",
+             postalcode: "12345",
+             isMailingAddress: true,
+             isCurrent: false
+        ),1),
+         (nil ,0)
+     ])
+    mutating func test_addAddress (address: AddressModel?, expectedCount: Int){
+        guard let mockManager = mockManager else {
+            #expect(Bool(false), "mockManager is not initialized")
+            return
+        }
+        viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
+        viewModel.addAddress()
+        #expect(mockManager.mockAddresses.count == expectedCount)
     }
-    @Test func test_AddressManipulationViewModel_UpdateAddress() {
-        let mockManager = MockAddressManager()
-        let address = AddressModel(id: UUID(), street: "A", apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: true)
-        mockManager.addAddress(address)
-        let vm = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
-        vm.street = "Aab"
-        vm.apt = "Bbb"
-        vm.city = "Ccc"
-        vm.state = "Ddd"
-        vm.postalcode = "12346"
-        vm.isMailingAddress = false
-        vm.isCurrent = true
-        vm.updateAddress()
-        #expect(mockManager.mockAddresses.count == 1)
-        #expect(mockManager.mockAddresses[0].street == "Aab")
-        #expect(mockManager.mockAddresses[0].apt == "Bbb")
-        #expect(mockManager.mockAddresses[0].city == "Ccc")
-        #expect(mockManager.mockAddresses[0].state == "Ddd")
-        #expect(mockManager.mockAddresses[0].postalcode == "12346")
-        #expect(mockManager.mockAddresses[0].isMailingAddress == false)
+    @Test("Initialization all test case", arguments: [
+         (AddressModel(
+             id: UUID(),
+             street: "A",
+             apt: "B",
+             city: "C",
+             state: "D",
+             postalcode: "12345",
+             isMailingAddress: true,
+             isCurrent: false
+         ),true),
+         (nil,false)
+     ])
+    mutating func test_updateAddress (address: AddressModel?, expectedValue: Bool) {
+        guard let mockManager = mockManager else {
+            #expect(Bool(false), "mockManager is not initialized")
+            return
+        }
+        viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
+        viewModel.updateAddress()
+        #expect(viewModel.isAlert == !expectedValue)
+        #expect(mockManager.updateAddressCalled == expectedValue)
     }
-    @Test func test_AddressManipulationViewModel_DeleteAddress() {
-        let mockManager = MockAddressManager()
-        mockManager.mockAddresses = []
-        #expect(mockManager.mockAddresses.count == 0)
-        let address = AddressModel(id: UUID(), street: "A", apt: "B", city: "C", state: "D", postalcode: "12345", isMailingAddress: true, isCurrent: true)
-        mockManager.addAddress(address)
-        let vm = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
-        #expect(mockManager.mockAddresses.count == 1)
-        vm.deleteAddress()
-        #expect(mockManager.mockAddresses.count == 0)
+    @Test("Initialization all test case", arguments: [
+        (AddressModel(
+            id: UUID(),
+            street: "A",
+            apt: "B",
+            city: "C",
+            state: "D",
+            postalcode: "12345",
+            isMailingAddress: true,
+            isCurrent: false
+        ),true),
+        (nil,false)
+    ])
+    mutating func test_deleteAddress (address: AddressModel?, expectedValue: Bool) {
+        guard let mockManager = mockManager else {
+            #expect(Bool(false), "mockManager is not initialized")
+            return
+        }
+        viewModel = AddressManipulationViewModel(manager: mockManager,addressToManipulate: address, decider: true)
+        viewModel.deleteAddress()
+        #expect(mockManager.deleteAddressCalled == expectedValue)
     }
 }

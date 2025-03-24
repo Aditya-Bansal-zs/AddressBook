@@ -8,19 +8,7 @@
 import Testing
 @testable import AddressBook
 
-enum SelectedOptionTestCase: CaseIterable {
-    case previous
-    case select
-    var expectedValue: String {
-        switch self{
-        case .previous:
-            return "A"
-        case .select:
-            return "Select an option"
-        }
-    }
-}
-
+@MainActor
 struct StateDropDownViewModelTests {
     var mockManager: MockAddressManager?
     var viewModel: StateDropDownViewModel!

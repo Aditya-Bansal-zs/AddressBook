@@ -8,144 +8,144 @@
 import Testing
 @testable import AddressBook
 
-enum TextFieldTestCases: CaseIterable{
-    case street
-    case apt
-    case city
-    case zip
-    var fieldType: TextFieldType {
-        switch self{
-        case .street:
-            return .street
-        case .apt:
-            return .apt
-        case .city:
-            return .city
-        case .zip:
-            return .zip
-        }
-    }
-    var Title: String {
-        switch self{
-        case .street:
-            return "street"
-        case .apt:
-            return "apt"
-        case .city:
-            return "city"
-        case .zip:
-            return "zip"
-        }
-    }
-    var placeHolder: String {
-        switch self {
-        case .street: "Enter street"
-        case .apt: "Enter apt"
-        case .city: "Enter city"
-        case .zip: "Enter zip"
-        }
-    }
-    var validationMessage: String {
-        switch self{
-        case .street:
-            return "Please enter a valid street."
-        case .apt:
-            return "Please enter a valid apt."
-        case .city:
-            return "Please enter a valid city."
-        case .zip:
-            return "Please enter a valid zip code (5 digits)."
-        }
-    }
-}
-
-enum BooleanTestCase: CaseIterable {
-    case bothTrue
-    case bothFalse
-    case firstTrueSecondFalse
-    case firstFalseSecondTrue
-    var isValid: Bool {
-        switch self{
-        case .bothTrue:
-            return true
-        case .bothFalse:
-            return false
-        case .firstTrueSecondFalse:
-            return true
-        case .firstFalseSecondTrue:
-            return false
-        }
-    }
-    var firstTime: Bool {
-        switch self{
-        case .bothTrue:
-            return true
-        case .bothFalse:
-            return false
-        case .firstTrueSecondFalse:
-            return false
-        case .firstFalseSecondTrue:
-            return true
-        }
-    }
-    var expectedValue: Bool {
-        switch self{
-        case .bothTrue:
-            return false
-        case .bothFalse:
-            return true
-        case .firstTrueSecondFalse:
-            return false
-        case .firstFalseSecondTrue:
-            return false
-        }
-    }
-}
-
-enum validateInputTestCase: CaseIterable{
-    case zipWithValidCount
-    case zipWithNotValidCount
-    case otherWithNotEmptyString
-    case otherWithEmptyString
-    
-    var fieldType: TextFieldType{
-        switch self{
-        case .zipWithValidCount:
-            return .zip
-        case .zipWithNotValidCount:
-            return .zip
-        case .otherWithEmptyString:
-            return .street
-        case .otherWithNotEmptyString:
-            return .street
-        }
-    }
-    var isValid: Bool {
-        switch self{
-        case .zipWithValidCount:
-            return true
-        case .zipWithNotValidCount:
-            return false
-        case .otherWithEmptyString:
-            return false
-        case .otherWithNotEmptyString:
-            return true
-        }
-    }
-    var value: String{
-        switch self{
-        case .zipWithValidCount:
-            return "12234"
-        case .zipWithNotValidCount:
-            return "12"
-        case .otherWithEmptyString:
-            return ""
-        case .otherWithNotEmptyString:
-            return "A"
-        }
-    }
-}
-
+//enum TextFieldTestCases: CaseIterable{
+//    case street
+//    case apt
+//    case city
+//    case zip
+//    var fieldType: TextFieldType {
+//        switch self{
+//        case .street:
+//            return .street
+//        case .apt:
+//            return .apt
+//        case .city:
+//            return .city
+//        case .zip:
+//            return .zip
+//        }
+//    }
+//    var Title: String {
+//        switch self{
+//        case .street:
+//            return "street"
+//        case .apt:
+//            return "apt"
+//        case .city:
+//            return "city"
+//        case .zip:
+//            return "zip"
+//        }
+//    }
+//    var placeHolder: String {
+//        switch self {
+//        case .street: "Enter street"
+//        case .apt: "Enter apt"
+//        case .city: "Enter city"
+//        case .zip: "Enter zip"
+//        }
+//    }
+//    var validationMessage: String {
+//        switch self{
+//        case .street:
+//            return "Please enter a valid street."
+//        case .apt:
+//            return "Please enter a valid apt."
+//        case .city:
+//            return "Please enter a valid city."
+//        case .zip:
+//            return "Please enter a valid zip code (5 digits)."
+//        }
+//    }
+//}
+//
+//enum BooleanTestCase: CaseIterable {
+//    case bothTrue
+//    case bothFalse
+//    case firstTrueSecondFalse
+//    case firstFalseSecondTrue
+//    var isValid: Bool {
+//        switch self{
+//        case .bothTrue:
+//            return true
+//        case .bothFalse:
+//            return false
+//        case .firstTrueSecondFalse:
+//            return true
+//        case .firstFalseSecondTrue:
+//            return false
+//        }
+//    }
+//    var firstTime: Bool {
+//        switch self{
+//        case .bothTrue:
+//            return true
+//        case .bothFalse:
+//            return false
+//        case .firstTrueSecondFalse:
+//            return false
+//        case .firstFalseSecondTrue:
+//            return true
+//        }
+//    }
+//    var expectedValue: Bool {
+//        switch self{
+//        case .bothTrue:
+//            return false
+//        case .bothFalse:
+//            return true
+//        case .firstTrueSecondFalse:
+//            return false
+//        case .firstFalseSecondTrue:
+//            return false
+//        }
+//    }
+//}
+//
+//enum validateInputTestCase: CaseIterable{
+//    case zipWithValidCount
+//    case zipWithNotValidCount
+//    case otherWithNotEmptyString
+//    case otherWithEmptyString
+//    
+//    var fieldType: TextFieldType{
+//        switch self{
+//        case .zipWithValidCount:
+//            return .zip
+//        case .zipWithNotValidCount:
+//            return .zip
+//        case .otherWithEmptyString:
+//            return .street
+//        case .otherWithNotEmptyString:
+//            return .street
+//        }
+//    }
+//    var isValid: Bool {
+//        switch self{
+//        case .zipWithValidCount:
+//            return true
+//        case .zipWithNotValidCount:
+//            return false
+//        case .otherWithEmptyString:
+//            return false
+//        case .otherWithNotEmptyString:
+//            return true
+//        }
+//    }
+//    var value: String{
+//        switch self{
+//        case .zipWithValidCount:
+//            return "12234"
+//        case .zipWithNotValidCount:
+//            return "12"
+//        case .otherWithEmptyString:
+//            return ""
+//        case .otherWithNotEmptyString:
+//            return "A"
+//        }
+//    }
+//}
+@MainActor
 struct TextFieldViewModelTests {
     var viewModel: TextFieldViewModel
     init() {

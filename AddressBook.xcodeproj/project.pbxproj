@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F15A6B202D8AA6C100635B87 /* AddressBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddressBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F15A6B312D8AA6C400635B87 /* AddressBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F15A6B3B2D8AA6C400635B87 /* AddressBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15A6CE02D8AC81C00635B87 /* AddressBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddressBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15A6CE12D8AC81C00635B87 /* AddressBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15A6CE22D8AC81C00635B87 /* AddressBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,18 +78,10 @@
 				F15A6B222D8AA6C100635B87 /* AddressBook */,
 				F15A6B342D8AA6C400635B87 /* AddressBookTests */,
 				F15A6B3E2D8AA6C400635B87 /* AddressBookUITests */,
-				F15A6B212D8AA6C100635B87 /* Products */,
+				F15A6CE02D8AC81C00635B87 /* AddressBook.app */,
+				F15A6CE12D8AC81C00635B87 /* AddressBookTests.xctest */,
+				F15A6CE22D8AC81C00635B87 /* AddressBookUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		F15A6B212D8AA6C100635B87 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F15A6B202D8AA6C100635B87 /* AddressBook.app */,
-				F15A6B312D8AA6C400635B87 /* AddressBookTests.xctest */,
-				F15A6B3B2D8AA6C400635B87 /* AddressBookUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +106,7 @@
 			packageProductDependencies = (
 			);
 			productName = AddressBook;
-			productReference = F15A6B202D8AA6C100635B87 /* AddressBook.app */;
+			productReference = F15A6CE02D8AC81C00635B87 /* AddressBook.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F15A6B302D8AA6C400635B87 /* AddressBookTests */ = {
@@ -137,7 +129,7 @@
 			packageProductDependencies = (
 			);
 			productName = AddressBookTests;
-			productReference = F15A6B312D8AA6C400635B87 /* AddressBookTests.xctest */;
+			productReference = F15A6CE12D8AC81C00635B87 /* AddressBookTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F15A6B3A2D8AA6C400635B87 /* AddressBookUITests */ = {
@@ -160,7 +152,7 @@
 			packageProductDependencies = (
 			);
 			productName = AddressBookUITests;
-			productReference = F15A6B3B2D8AA6C400635B87 /* AddressBookUITests.xctest */;
+			productReference = F15A6CE22D8AC81C00635B87 /* AddressBookUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +188,7 @@
 			mainGroup = F15A6B172D8AA6C100635B87;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = F15A6B212D8AA6C100635B87 /* Products */;
+			productRefGroup = F15A6B172D8AA6C100635B87;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

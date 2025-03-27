@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct HomeView: View {
-    @StateObject var viewModel: AddressListViewModel = AddressListViewModel(manager: .shared,section: false)
+    @StateObject var viewModel: AddressListViewModel = AddressListViewModel(manager: AddressManager.shared,section: false)
     @State private var showAddAddressSheet = false
 
     var body: some View {
@@ -35,7 +35,7 @@ struct HomeView: View {
         .sheet(isPresented: $showAddAddressSheet) {
             NavigationStack { // Wrap inside NavigationStack
                 VStack {
-                    let viewModel = AddressManipulationViewModel(manager: .shared, decider: false)
+                    let viewModel = AddressManipulationViewModel(manager: AddressManager.shared, decider: false)
                     AddressManipulationView(viewModel: viewModel)
                         .padding(.top, 20)
                         .background(Color(UIColor.systemBackground))

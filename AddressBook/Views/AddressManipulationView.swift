@@ -76,7 +76,9 @@ struct AddressManipulationView: View {
                                 .padding(.horizontal)
                         }
                     }
-                }
+                }.alert("Error in adding all fields", isPresented: $viewModel.isAlert, actions: {
+                    Button("OK", role: .cancel){}
+                })
                 .padding(.bottom, 20)
             }
             .navigationTitle(viewModel.decider ? "Edit Address" : "Add Address")

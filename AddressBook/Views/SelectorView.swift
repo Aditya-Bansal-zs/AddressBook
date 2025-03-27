@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectorView: View {
-    @StateObject var viewModel = SectionViewModel(manager: .shared)
+    @StateObject var viewModel = SectionViewModel(manager: AddressManager.shared)
     let vm = AddressListViewModel(section: true)
     
     @State var isNavigating: Bool = false

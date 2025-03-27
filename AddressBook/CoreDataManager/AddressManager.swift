@@ -14,11 +14,13 @@ extension Notification.Name {
 
 protocol AddressManagerProtocol {
     func addAddress(_ address: AddressModel)
-    func updateAddress(addressToManipulate:AddressModel?,  updatedAddress: AddressModel)
+    func updateAddress(addressToManipulate: AddressModel?, updatedAddress: AddressModel)
     func deleteAddress(addressToDelete: AddressModel)
+    func mapEntityToAddressModel(section: Bool) -> [AddressModel]
+    func updateCurrent(addressToManipulate:AddressModel?)
 }
 
-class AddressManager: AddressManagerProtocol{
+class AddressManager: AddressManagerProtocol {
     static let shared: AddressManager = AddressManager()
     
     var container: NSPersistentContainer
@@ -107,7 +109,6 @@ class AddressManager: AddressManagerProtocol{
     }
 
     func deleteAddress(addressToDelete: AddressModel) {
-        print("Deleting Address with ID: \(addressToDelete.id.uuidString)")
         let fetchRequest: NSFetchRequest<AddressEntity> = AddressEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", addressToDelete.id as NSUUID)
 

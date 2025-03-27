@@ -11,9 +11,9 @@ import CoreData
 class AddressListViewModel: ObservableObject {
     @Published var addresses: [AddressModel] = []
     var section: Bool = false
-    private let manager: AddressManager
+    private let manager: AddressManagerProtocol
 
-    init(manager: AddressManager = .shared,section: Bool) {
+    init(manager:AddressManagerProtocol = AddressManager.shared,section: Bool) {
         self.manager = manager
         self.section = section
         NotificationCenter.default.addObserver(
@@ -22,7 +22,6 @@ class AddressListViewModel: ObservableObject {
             name: .didUpdateAddresses,
             object: nil
         )
-//        print("section: \(self.section)")
         addresses =  fetchAddressList()
     }
 
@@ -31,9 +30,6 @@ class AddressListViewModel: ObservableObject {
     }
 
     func fetchAddressList()->[AddressModel] {
-//        print("\(self.section)")
-        return AddressManager.shared.mapEntityToAddressModel(section: section)
-//        print(addresses.first?.isCurrent ?? "No address")
-//        print("Fetching addresses...")
+        return manager.mapEntityToAddressModel(section: section)
     }
 }
